@@ -1,0 +1,7 @@
+services:
+  redis:
+    image: redis
+    restart: always
+    volumes:
+      - ./redis.conf:/etc/redis/redis.conf
+    command: [ "redis-server","/etc/redis/redis.conf" ]

@@ -1,0 +1,43 @@
+name: demo_project
+
+services:
+  postgres:
+    image: postgres:15
+    # ... see full config from postgres
+    healthcheck:
+      test: pg_isready -U postgres
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+  migrate:
+    image: demo_project
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: never
+    restart: on-failure
+    environment:
+      PYTHONPATH: /app
+    command: python manage.py migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    image: demo_project
+    pull_policy: never
+    restart: always
+    environment:
+      PYTHONPATH: /app
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    command: gunicorn
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully

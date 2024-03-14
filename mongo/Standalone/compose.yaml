@@ -1,0 +1,23 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: on-failure
+    hostname: mongo
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/mongo:/data/db
+      - ./data/mongo_config:/data/configdb
+      - ./conf/mongo-replication.key:/etc/mongo-replication.key
+      - ./conf/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+    command: [ "--replSet", "dbrs", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: changepassword
+    healthcheck:
+      test: echo "rs.initiate().ok || rs.status().ok" | mongosh -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD} --quiet
+      interval: 5s
+      start_period: 8s
+      start_interval: 2s
+      retries: 30

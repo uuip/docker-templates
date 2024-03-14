@@ -1,0 +1,6 @@
+services:
+  test:
+    build:
+      context: .
+      ssh:
+        - default=/Users/sharp/.ssh/id_ed25519

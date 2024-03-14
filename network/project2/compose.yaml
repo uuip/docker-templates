@@ -1,0 +1,20 @@
+# 默认：将project1的网络定义配置为project2网络
+networks:
+  default:
+    external: true
+    name: "project1_net"
+
+
+# 可选：定义非默认网络，显式指定networks的services走这个
+#networks:
+#  project1_net:
+#    external: true
+
+services:
+  api:
+    build:
+      context: .
+    command: "python testnet.py"
+#    networks:
+#      - project1_net
+

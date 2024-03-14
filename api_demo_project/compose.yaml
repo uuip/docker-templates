@@ -1,0 +1,57 @@
+name: demo_project
+
+services:
+  api:
+    image: demo_project
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: never
+    restart: always
+    init: true
+    shm_size: 4gb
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment: &env
+      LEVEL: "true"
+      PGTZ: UTC
+      PYTHONPATH: /app
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    command: bash -c "python manage.py migrate && gunicorn"
+    depends_on:
+      - db
+
+  api2:
+    # image, pull_policy, depends_on api 联合使用，使api2 复用image而不重新编译
+    image: demo_project
+    pull_policy: never
+    environment: *env
+    command: [ "python","something.py" ]
+    depends_on:
+      - api
+      - db
+
+  api3:
+    image: demo_project
+    pull_policy: never
+    # 如果锚点定义的环境变量是列表方式，那么不能使用此方法融合。
+    environment:
+      <<: *env
+      YET_ANOTHER: VARIABLE
+    ports:
+      - "8002:8002"
+    command: python manage.py runserver --noreload 0.0.0.0:8002
+    depends_on:
+      - api
+
+
+
+

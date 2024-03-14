@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:15
+    restart: always
+    command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: changepassword
+      POSTGRES_DB: main
+    ports:
+      - "5432:5432"
+    shm_size: 4g
+    volumes:
+      - ./pg_init:/docker-entrypoint-initdb.d
+      - ./pgdata:/var/lib/postgresql/data
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
