@@ -4,12 +4,12 @@ services:
     restart: always
     command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
     environment:
-      POSTGRES_USER: root
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changepassword
-      POSTGRES_DB: main
-    ports:
-      - "5432:5432"
-    shm_size: 4g
+      POSTGRES_DB: postgres
+    # ports:
+    #   - "5432:5432"
+    shm_size: 4g # 数据库的后台worker使用
     volumes:
       - ./pg_init:/docker-entrypoint-initdb.d
       - ./pgdata:/var/lib/postgresql/data
