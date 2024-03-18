@@ -4,10 +4,6 @@ services:
     restart: on-failure
     hostname: mongo
     container_name: mongo
-    ports:
-      - "27017:27017"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     volumes:
       - ./data/mongo:/data/db
       - ./data/mongo_config:/data/configdb
@@ -18,7 +14,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: changepassword
     healthcheck:
-      test: echo "rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'}]}).ok || rs.status().ok" | mongosh -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD} --quiet
+      test: echo "rs.initiate().ok || rs.status().ok" | mongosh -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD} --quiet
       interval: 5s
       start_period: 8s
       start_interval: 2s

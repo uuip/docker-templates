@@ -11,3 +11,4 @@
 
 3. 修改compose.yml MONGO_INITDB_ROOT_PASSWORD
 4. 如果mongo提示vm.max_map_count问题，在主机中配置vm.max_map_count=1677720
+5. Standalone 对外映射端口；Standalone_internal 不对外映射端口，仅限 docker compose 项目内。
