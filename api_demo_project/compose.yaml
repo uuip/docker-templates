@@ -61,7 +61,7 @@ services:
       mode: replicated
       replicas: 1
     init: true  # 如果有子进程创建, 避免应用程序生成僵尸进程
-    shm_size: 4gb # pg数据库应当配置, 数据库的后台worker使用
+    shm_size: 2gb # pg数据库应当配置, 数据库的后台worker使用
     ulimits:
       nofile:
         soft: 100000

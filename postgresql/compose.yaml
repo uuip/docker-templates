@@ -1,3 +1,6 @@
+volumes:
+  pgdata:
+
 services:
   postgres:
     image: postgres:15
@@ -9,8 +12,8 @@ services:
       POSTGRES_DB: postgres
     # ports:
     #   - "5432:5432"
-    shm_size: 4g # 数据库的后台worker使用
+    shm_size: 2g # 数据库的后台worker使用
     volumes:
+      - pgdata:/var/lib/postgresql/data
       - ./pg_init:/docker-entrypoint-initdb.d
-      - ./pgdata:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql/postgresql.conf
