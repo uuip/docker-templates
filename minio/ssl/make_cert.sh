@@ -1,0 +1,1 @@
+openssl req -x509 -days 3650 -noenc -newkey ec -pkeyopt ec_paramgen_curve:prime256v1 -keyout cert/server.key -out cert/server.cer  -config ./openssl.cnf
