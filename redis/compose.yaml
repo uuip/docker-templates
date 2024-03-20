@@ -5,3 +5,9 @@ services:
     volumes:
       - ./redis.conf:/etc/redis/redis.conf
     command: [ "redis-server","/etc/redis/redis.conf" ]
+#    healthcheck:
+#      test: "[ $$(redis-cli -a changepassword ping) = 'PONG' ]"
+#      interval: 5s
+#      timeout: 10s
+#      retries: 5
+#      start_period: 5s

@@ -4,17 +4,22 @@ networks:
     external: true
     name: "project1_net"
 
+services:
+  api:
+    build: .
+    command: python testnet.py
 
-# 可选：定义非默认网络，显式指定networks的services走这个
+
+####################################
+# 定义非默认网络，显式指定networks
 #networks:
 #  project1_net:
 #    external: true
-
-services:
-  api:
-    build:
-      context: .
-    command: "python testnet.py"
+#
+#services:
+#  api:
+#    build: .
+#    command: python testnet.py
 #    networks:
 #      - project1_net
 
