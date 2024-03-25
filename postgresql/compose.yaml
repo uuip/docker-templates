@@ -15,11 +15,11 @@ services:
       - pgdata:/var/lib/postgresql/data
       - ./pg_init:/docker-entrypoint-initdb.d
       - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
 #    ports:
 #      - "5432:5432"
-#    healthcheck:
-#      test: pg_isready -U $$POSTGRES_USER
-#      interval: 5s
-#      timeout: 10s
-#      retries: 5
-#      start_period: 5s

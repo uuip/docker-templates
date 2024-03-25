@@ -11,7 +11,7 @@
 
 ## 端口映射
 
-同一个docker网络间的服务都可以用service name作为地址来引用，redis和pg在生产环境没必要向外映射端口。
+即使不向外映射端口，同一个docker网络间的端口，在内部都是可访问的。
 
 ## 环境变量更新
 
@@ -31,8 +31,6 @@ docker compose pull
 Dockfile中引用的镜像：
 
 `docker pull imagename`
-
-虽然可以配置pull_policy, 不如手动按需操作。
 
 ## 常用基础镜像
 
