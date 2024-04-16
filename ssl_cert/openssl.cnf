@@ -1,0 +1,22 @@
+[ req ]
+default_md = sha256
+distinguished_name = req_distinguished_name
+x509_extensions = v3_req
+prompt = no
+
+[ req_distinguished_name ]
+#C = MyCountry
+#ST = MyProvince
+#L = MyCity
+#O = MyCompany
+#OU = MyDivision
+CN = *.demo.com
+
+[ v3_req ]
+subjectAltName = @alt_names
+keyUsage = digitalSignature
+extendedKeyUsage = serverAuth
+
+[ alt_names ]
+IP.1 = 127.0.0.1
+DNS.1 = abc.demo.net

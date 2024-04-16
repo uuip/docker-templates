@@ -1,0 +1,8 @@
+{
+    "codeCellConfig": {
+        "customStyles": {
+            "fontFamily": "Cascadia Mono,Fira Code,monospace",
+            "fontSize": 16
+        }
+    }
+}

@@ -1,0 +1,17 @@
+services:
+  redis:
+    image: redis
+    restart: always
+    command: [ "--requirepass","changepassword" ]
+    healthcheck:
+      test: "[ $$(redis-cli -a changepassword ping) = 'PONG' ]"
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+#    volumes:
+#      - ./redis.conf:/etc/redis/redis.conf
+#    command: [ "/etc/redis/redis.conf" ]
+#    ports:
+#      - "6379:6379"
+

@@ -1,0 +1,92 @@
+name: demo_project
+
+services:
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changepassword
+      POSTGRES_DB: postgres
+    # ... other config
+    healthcheck:
+      test: pg_isready -U $${POSTGRES_USER}
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+
+  redis:
+    image: redis
+
+  migrate:
+    image: demo_project
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: never
+    restart: on-failure
+    environment: # 列表方式，可通过锚点引用，不能merge; yaml只能merge字典
+      - DB_URL=postgres://postgres:postgres@postgres/postgres
+      - REDIS_URL=redis://redis
+    command: python manage.py migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  api:
+    # image, pull_policy, depends_on migrate 联合使用，复用image而不重新编译
+    image: demo_project
+    pull_policy: never
+    restart: always
+    environment: &env # 字典方式，可通过锚点引用、融合
+      DEBUG: "true"
+      DB_URL: postgres://postgres:postgres@postgres/postgres
+      REDIS_URL: redis://redis
+    volumes:
+      - ./logs:/app/logs
+    ports:
+      - "8000:8000"
+    command: gunicorn
+    depends_on: # condition组织启动顺序
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully  # 执行完成并成功退出
+      redis:
+        condition: service_started
+    # 以下为可选
+    deploy: # 副本数量，可选
+      mode: replicated
+      replicas: 1
+    init: true  # 如果有子进程创建, 避免应用程序生成僵尸进程
+    shm_size: 2gb # pg数据库应当配置, 数据库的后台worker使用
+    ulimits:
+      nofile:
+        soft: 100000
+        hard: 100000
+
+  api2:
+    image: demo_project
+    pull_policy: never
+    environment: *env
+    command: [ "python","something.py" ]
+    depends_on:
+      - api # 等价于 condition: service_started
+      - redis
+
+  api3:
+    image: demo_project
+    pull_policy: never
+    environment:
+      <<: *env
+      YET_ANOTHER: VARIABLE
+      DB_URL: OVERRIDE
+    ports:
+      - "8002:8002"
+    command: python manage.py runserver --noreload 0.0.0.0:8002
+    depends_on:
+      - api
+
+
+
+

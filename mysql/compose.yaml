@@ -1,0 +1,23 @@
+volumes:
+  mysqldata:
+
+services:
+  mysql:
+    image: mysql
+    restart: always
+    shm_size: 2g
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - mysqldata:/var/lib/mysql
+      - ./mysql_init:/docker-entrypoint-initdb.d/
+    environment:
+      MYSQL_ROOT_PASSWORD: changepassword
+      LANG: C.UTF-8
+    healthcheck:
+      test: mysqladmin ping -u root --password=$$MYSQL_ROOT_PASSWORD
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+#    ports:
+#      - "3306:3306"

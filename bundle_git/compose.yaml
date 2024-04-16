@@ -1,0 +1,14 @@
+services:
+  inside-clone:
+    build:
+      context: .
+      ssh:
+        - default
+        # - default=/root/.ssh/id_rsa
+
+  remote-repo:
+    build:
+      context: git@github.com:8lab-fl-team/ppcn-frontend.git#master
+      dockerfile: docker/Dockerfile
+      ssh:
+        - default

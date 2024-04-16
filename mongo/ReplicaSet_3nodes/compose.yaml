@@ -1,0 +1,54 @@
+services:
+  mongo:
+    image: mongo:7
+    restart: always
+    hostname: mongo1
+    ports:
+      - "27017:27017"
+    extra_hosts:
+      - "host.docker.internal=host-gateway"
+    volumes:
+      - ./data/mongo1:/data/db
+      - ./data/mongo1_config:/data/configdb
+      - ./conf/mongo-replication.key:/etc/mongo-replication.key
+      - ./conf/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+    command: [ "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
+    environment: &env
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: changepassword
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'host.docker.internal:27017'},{_id:1,host:'host.docker.internal:27018'},{_id:2,host:'host.docker.internal:27019'}]}) }" | mongosh -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD}
+      interval: 5s
+      timeout: 2s
+      retries: 30
+      start_period: 5s
+
+  mongo2:
+    image: mongo:7
+    restart: always
+    hostname: mongo2
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./data/mongo2:/data/db
+      - ./data/mongo2_config:/data/configdb
+      - ./conf/mongo-replication.key:/etc/mongo-replication.key
+      - ./conf/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+    command: [ "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
+    environment:
+      *env
+
+  mongo3:
+    image: mongo:7
+    restart: always
+    hostname: mongo3
+    ports:
+      - "27019:27017"
+    volumes:
+      - ./data/mongo3:/data/db
+      - ./data/mongo3_config:/data/configdb
+      - ./conf/mongo-replication.key:/etc/mongo-replication.key
+      - ./conf/enabled:/sys/kernel/mm/transparent_hugepage/enabled
+    command: [ "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
+    environment:
+      *env

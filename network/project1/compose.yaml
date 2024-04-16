@@ -1,0 +1,7 @@
+networks:
+  default:
+    name: project1_net
+
+services:
+  redis:
+    image: redis

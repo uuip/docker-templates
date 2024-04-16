@@ -1,0 +1,6 @@
+__pycache__
+Dockerfile
+docker
+compose.*
+logs/*
+venv

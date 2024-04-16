@@ -1,0 +1,10 @@
+name: rust_project
+services:
+  consumer:
+    image: rust_project
+    pull_policy: never
+    restart: always
+    build: .
+    environment: &env
+      - DB_URL=postgres://postgres:postgres@postgres/postgres
+    command: consumer

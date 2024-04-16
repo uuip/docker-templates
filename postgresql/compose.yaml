@@ -1,0 +1,25 @@
+volumes:
+  pgdata:
+
+services:
+  postgres:
+    image: postgres:16
+    restart: always
+    shm_size: 2g # 数据库的后台worker使用
+    command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changepassword
+      POSTGRES_DB: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./pg_init:/docker-entrypoint-initdb.d
+      - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    healthcheck:
+      test: pg_isready -U $$POSTGRES_USER
+      interval: 5s
+      timeout: 10s
+      retries: 5
+      start_period: 5s
+#    ports:
+#      - "5432:5432"

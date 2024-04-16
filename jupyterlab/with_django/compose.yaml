@@ -1,0 +1,19 @@
+name: jupyterlab_django
+services:
+  consume:
+    image: jupyterlab_django
+    pull_policy: never
+    restart: always
+    init: true
+    build:
+      context: .
+      dockerfile: jupyterlab.Dockerfile
+    environment:
+      - LOGURU_LEVEL=INFO
+      - PGTZ=UTC
+      - PYTHONPATH=/app
+    ports:
+      - "7000:7000"
+
+
+

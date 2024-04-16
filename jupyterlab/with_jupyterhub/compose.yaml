@@ -1,0 +1,14 @@
+services:
+  jupyterlab:
+    image: jlab
+    build:
+      context: .
+      dockerfile: jupyterlab.Dockerfile
+    pull_policy: never
+    restart: always
+    init: true
+    environment:
+      - PYTHONPATH=/app
+    ports:
+      - 8007:8000
+    command: jupyterhub -f /etc/jupyterhub/jupyterhub_config.py

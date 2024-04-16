@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "djangoexample"
+version = "0.1.0"
+description = ""
+authors = ["uuip <uuip@users.noreply.github.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+django = "~4.2.11"
+gunicorn = "^21.2.0"
+gevent = "^24.2.1"
+psycopg = { extras = ["binary", "pool"], version = "^3.1.14" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
