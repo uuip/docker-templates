@@ -10,8 +10,9 @@ services:
     volumes:
       - mysqldata:/var/lib/mysql
     environment:
+      MYSQL_DATABASE: main
       MYSQL_ROOT_PASSWORD: changepassword
-      LANG: C.UTF-8
+      LANG: C.utf8
     healthcheck:
       test: mysqladmin ping -u root --password=$$MYSQL_ROOT_PASSWORD
       interval: 5s
