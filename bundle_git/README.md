@@ -5,7 +5,7 @@ git@github.com:YOUR-USERNAME/YOUR-REPOSITORY.git
 ssh://git@ssh.github.com:443/YOUR-USERNAME/YOUR-REPOSITORY.git
 ```
 
-- 后者用于不能正常访问github的22端口时，参见[在 HTTPS 端口使用 SSH](https://docs.github.com/zh/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)
+- 后者用于git clone命令，替换github的22端口仓库地址，参见[在 HTTPS 端口使用 SSH](https://docs.github.com/zh/authentication/troubleshooting-ssh/using-ssh-over-the-https-port)
 
 - 在compose.yaml的context中，只能使用第一种格式。
 
