@@ -57,9 +57,15 @@ ENV PROJECT_DIR=/app
 
 RUN sed -i 's|deb.debian.org|mirrors.aliyun.com|g' /etc/apt/sources.list.d/debian.sources \
     && pip config set global.index-url https://mirrors.aliyun.com/pypi/simple \
-    && pip install --no-cache-dir -U pip wheel setuptools \
+    && pip install --no-cache-dir -U pip setuptools \
     && mkdir $PROJECT_DIR
 
 WORKDIR $PROJECT_DIR
+```
+
+## 坑
+应当在Dockfile 的 RUN 命令先更新 pip setuptools版本：
+```shell
+pip install --no-cache-dir -U "pip==24.2" "setuptools==72.1"
 ```
 

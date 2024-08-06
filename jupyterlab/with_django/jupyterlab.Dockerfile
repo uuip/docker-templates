@@ -11,7 +11,7 @@ COPY DjangoExample/requirements.txt requirements.txt
 COPY .jupyter /usr/local/website-backend/.jupyter
 RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources&&apt-get update && apt-get install -y build-essential \
     &&pip3 config set global.index-url https://mirrors.aliyun.com/pypi/simple/ \
-    &&pip3 install --no-cache-dir -U pip wheel \
+    &&pip3 install --no-cache-dir -U pip \
     &&pip3 install --no-cache-dir -r requirements.txt \
     &&pip3 install --no-cache-dir django-extensions==3.2.3 jedi==0.17.2 jupyterlab==4.0.11 pandas==2.2.0 jupyterlab-lsp==5.0.2 python-lsp-server==1.10.0 \
     &&groupadd ubuntu && useradd -m -g ubuntu ubuntu&&chown -R ubuntu:ubuntu /var/log/&&chown -R ubuntu:ubuntu /usr/local/website-backend
