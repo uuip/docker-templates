@@ -1,6 +1,6 @@
 FROM ubuntu:22.04
 
-RUN sed -i -E "s/\w+.ubuntu.com/mirrors.tuna.tsinghua.edu.cn/g" /etc/apt/sources.list \
+RUN sed -i -E "s/\w+.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends git ca-certificates ssh \
     && rm -rf /var/lib/apt/lists/* \
