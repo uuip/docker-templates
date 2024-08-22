@@ -64,7 +64,7 @@ WORKDIR $PROJECT_DIR
 ```
 
 ## 坑
-应当在Dockfile 的 RUN 命令先更新 pip setuptools版本：
+项目里除requirements.txt外，还应当在Dockfile 的 RUN 命令锁定 pip setuptools 版本：
 ```shell
 pip install --no-cache-dir -U "pip==24.2" "setuptools==72.1"
 ```

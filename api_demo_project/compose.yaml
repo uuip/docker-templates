@@ -27,9 +27,7 @@ services:
   api:
     # image, pull_policy联合使用，复用image而 migrate 不重新编译
     image: demo_project
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     pull_policy: never
     restart: always
     environment: &env

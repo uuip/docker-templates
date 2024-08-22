@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - API=http://api:8000/
+      API: http://api:8000/
     depends_on:
       - api
 

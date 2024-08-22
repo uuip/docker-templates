@@ -8,8 +8,8 @@ services:
     volumes:
       - miniodata:/data
     environment:
-      - MINIO_ROOT_USER=root
-      - MINIO_ROOT_PASSWORD=changepassword
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: changepassword
     command: server /data --console-address=:9001
 
   nginx:
