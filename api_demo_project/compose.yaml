@@ -9,7 +9,7 @@ services:
     shm_size: 2g
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: changepassword
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       POSTGRES_INITDB_ARGS: --encoding=UTF8 --lc-collate=C --lc-ctype=C
     volumes:
@@ -24,27 +24,15 @@ services:
   redis:
     image: redis
 
-  migrate:
+  api:
+    # image, pull_policy联合使用，复用image而 migrate 不重新编译
     image: demo_project
     build:
       context: .
       dockerfile: Dockerfile
     pull_policy: never
-    restart: on-failure
-    environment: # 列表方式，可通过锚点引用，不能merge; yaml只能merge字典
-      - DB_URL=postgres://postgres:postgres@postgres/postgres
-      - REDIS_URL=redis://redis
-    command: python manage.py migrate
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  api:
-    # image, pull_policy, depends_on migrate 联合使用，复用image而不重新编译
-    image: demo_project
-    pull_policy: never
     restart: always
-    environment: &env # 字典方式，可通过锚点引用、融合
+    environment: &env
       DEBUG: "true"
       DB_URL: postgres://postgres:postgres@postgres/postgres
       REDIS_URL: redis://redis
@@ -71,6 +59,16 @@ services:
         soft: 100000
         hard: 100000
 
+  migrate:
+    image: demo_project
+    pull_policy: never
+    restart: on-failure
+    environment: *env
+    command: python manage.py migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
+
   api2:
     image: demo_project
     pull_policy: never
@@ -83,7 +81,7 @@ services:
   api3:
     image: demo_project
     pull_policy: never
-    environment:
+    environment: # yaml只能merge字典, 若是列表方式，可通过锚点引用，不能merge
       <<: *env
       YET_ANOTHER: VARIABLE
       DB_URL: OVERRIDE
