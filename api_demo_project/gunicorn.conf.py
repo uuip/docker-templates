@@ -4,6 +4,7 @@ workers = 4
 threads = 100
 reload = False
 daemon = False
+max_requests = 3000
 # errorlog = "logs/gun_error.log"
 # capture_output = True # Redirect stdout/stderr to specified file in errorlog.
 
