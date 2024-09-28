@@ -3,7 +3,7 @@ volumes:
 
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17
     restart: always
     shm_size: 2g # 数据库的后台worker使用
     command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
@@ -11,7 +11,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: changepassword
       POSTGRES_DB: postgres
+      # libc locale
       POSTGRES_INITDB_ARGS: --encoding=UTF8 --lc-collate=C --lc-ctype=C
+      # 17版本 builtin locale
+#      POSTGRES_INITDB_ARGS: --locale-provider=builtin --builtin-locale=C.UTF-8
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./postgresql.conf:/etc/postgresql/postgresql.conf
