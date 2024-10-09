@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 ENV PROJECT_DIR=/app
 ENV PYTHONPATH=/app
 COPY requirements.txt requirements.txt
@@ -10,4 +10,5 @@ RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debi
     && pip install --no-cache-dir -r requirements.txt
 WORKDIR $PROJECT_DIR
 COPY . .
+
 # ENTRYPOINT ["gunicorn"]

@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 ENV PROJECT_DIR=/app
 ENV PYTHONPATH=/app
 COPY requirements.txt requirements.txt
