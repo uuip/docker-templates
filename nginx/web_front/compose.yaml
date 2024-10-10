@@ -1,0 +1,8 @@
+name: data-transfer-front
+services:
+  front:
+    build: .
+    ports:
+      - "8008:80"
+    environment:
+      - API=http://1.2.3.4:8000/dt/api
