@@ -4,7 +4,7 @@ volumes:
 
 services:
   mongo:
-    image: mongo:7
+    image: mongo:8
     restart: always
     volumes:
       - mongo_data:/data/db

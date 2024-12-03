@@ -1,6 +1,6 @@
 services:
   mongo:
-    image: mongo:7
+    image: mongo:8
     restart: always
     hostname: mongo1
     ports:
@@ -24,7 +24,7 @@ services:
       start_period: 5s
 
   mongo2:
-    image: mongo:7
+    image: mongo:8
     restart: always
     hostname: mongo2
     ports:
@@ -39,7 +39,7 @@ services:
       *env
 
   mongo3:
-    image: mongo:7
+    image: mongo:8
     restart: always
     hostname: mongo3
     ports:
