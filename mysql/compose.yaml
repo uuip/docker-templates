@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: main
       MYSQL_ROOT_PASSWORD: changepassword
       LANG: C.utf8
+      TZ: Asia/Shanghai
 #    ports:
 #      - "3306:3306"
     volumes:
