@@ -1,4 +1,4 @@
-FROM python:3.11-slim as  builder
+FROM python:3.11-slim AS  builder
 RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debian.sources&&apt-get update && apt-get install -y wget \
     &&wget https://cdn.npmmirror.com/binaries/node/latest-v20.x/node-v20.11.0-linux-arm64.tar.gz \
     &&tar xf node-v20.11.0-linux-arm64.tar.gz --strip-components=1 -C /usr/
