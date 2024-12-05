@@ -14,6 +14,7 @@ services:
       - ./conf/enabled:/sys/kernel/mm/transparent_hugepage/enabled
     command: [ "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
     environment: &env
+      TZ: Asia/Shanghai
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: changepassword
     healthcheck:
