@@ -6,5 +6,5 @@ services:
     restart: always
     build: .
     environment: &env
-      - DB_URL=postgres://postgres:postgres@postgres/postgres
+      DB_URL: postgres://postgres:postgres@postgres/postgres
     command: consumer

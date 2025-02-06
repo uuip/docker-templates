@@ -1,4 +1,4 @@
-FROM rust:latest as builder
+FROM rust:latest AS builder
 WORKDIR /usr/src/consumer
 COPY . .
 RUN unzip protoc-24.2-linux-x86_64.zip -d /usr/local/ && cargo install --path .

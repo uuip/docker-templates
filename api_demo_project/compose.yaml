@@ -4,47 +4,33 @@ volumes:
 
 services:
   postgres:
-    image: postgres:16
+    image: postgres:17
     restart: always
     shm_size: 2g
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: changepassword
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: postgres
       POSTGRES_INITDB_ARGS: --encoding=UTF8 --lc-collate=C --lc-ctype=C
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U $$POSTGRES_USER
-      interval: 5s
-      timeout: 10s
-      retries: 5
+      interval: 10s
+      timeout: 3s
+      retries: 3
       start_period: 5s
 
   redis:
     image: redis
 
-  migrate:
-    image: demo_project
-    build:
-      context: .
-      dockerfile: Dockerfile
-    pull_policy: never
-    restart: on-failure
-    environment: # 列表方式，可通过锚点引用，不能merge; yaml只能merge字典
-      - DB_URL=postgres://postgres:postgres@postgres/postgres
-      - REDIS_URL=redis://redis
-    command: python manage.py migrate
-    depends_on:
-      postgres:
-        condition: service_healthy
-
   api:
-    # image, pull_policy, depends_on migrate 联合使用，复用image而不重新编译
+    # image, pull_policy联合使用，复用image而 migrate 不重新编译
     image: demo_project
+    build: .
     pull_policy: never
     restart: always
-    environment: &env # 字典方式，可通过锚点引用、融合
+    environment: &env
       DEBUG: "true"
       DB_URL: postgres://postgres:postgres@postgres/postgres
       REDIS_URL: redis://redis
@@ -65,11 +51,20 @@ services:
       mode: replicated
       replicas: 1
     init: true  # 如果有子进程创建, 避免应用程序生成僵尸进程
-    shm_size: 2gb # pg数据库应当配置, 数据库的后台worker使用
     ulimits:
       nofile:
         soft: 100000
         hard: 100000
+
+  migrate:
+    image: demo_project
+    pull_policy: never
+    restart: on-failure
+    environment: *env
+    command: python manage.py migrate
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   api2:
     image: demo_project
@@ -83,7 +78,7 @@ services:
   api3:
     image: demo_project
     pull_policy: never
-    environment:
+    environment: # yaml只能merge字典, 若是列表方式，可通过锚点引用，不能merge
       <<: *env
       YET_ANOTHER: VARIABLE
       DB_URL: OVERRIDE

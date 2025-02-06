@@ -4,9 +4,10 @@ volumes:
 
 services:
   mongo:
-    image: mongo:7
+    image: mongo:8
     restart: always
     environment:
+      TZ: Asia/Shanghai
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: changepassword
     volumes:
@@ -17,7 +18,7 @@ services:
     command: [ "--replSet", "rs0", "--bind_ip_all", "--keyFile", "/etc/mongo-replication.key" ]
     healthcheck:
       test: test $$(mongosh -u $${MONGO_INITDB_ROOT_USERNAME} -p $${MONGO_INITDB_ROOT_PASSWORD} --quiet --eval 'try {rs.status().ok} catch (err) {rs.initiate().ok}') -eq 1
-      interval: 5s
-      timeout: 2s
-      retries: 30
+      interval: 10s
+      timeout: 3s
+      retries: 3
       start_period: 5s
