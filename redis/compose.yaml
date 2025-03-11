@@ -2,15 +2,15 @@ services:
   redis:
     image: redis
     restart: always
-    command: [ "--requirepass","changepassword" ]
-#    ports:
-#      - "6379:6379"
-#    volumes:
-#      - ./redis.conf:/etc/redis/redis.conf
-#    command: [ "/etc/redis/redis.conf" ]
-    healthcheck:
-      test: "[ $$(redis-cli -a changepassword ping) = 'PONG' ]"
-      interval: 10s
-      timeout: 3s
-      retries: 3
-      start_period: 5s
+    # ports:
+    #  - "6379:6379"
+    # command: [ "--requirepass","changepassword" ]
+    # command: [ "/etc/redis/redis.conf" ]
+    # volumes:
+    #   - ./redis.conf:/etc/redis/redis.conf
+    # healthcheck:
+    #   test: "[ $$(redis-cli -a changepassword ping) = 'PONG' ]"
+    #   interval: 10s
+    #   timeout: 3s
+    #   retries: 3
+    #   start_period: 5s

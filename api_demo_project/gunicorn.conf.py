@@ -1,7 +1,7 @@
 wsgi_app = "project.wsgi"  # 模块里定义变量application，若是其他名称需要module:app标明
 bind = "0.0.0.0:8000"
 workers = 4
-threads = 100
+threads = 200
 reload = False
 daemon = False
 max_requests = 3000
