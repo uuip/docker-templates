@@ -18,3 +18,13 @@ max_requests = 3000
 
 # def post_fork(server, worker):
 #     patch_psycopg()
+
+# # for fastapi and uvicorn; pip install uvicorn-worker
+# import multiprocessing
+#
+# wsgi_app = "main:app"
+# bind = "0.0.0.0:8080"
+# workers = multiprocessing.cpu_count()
+# worker_class = "uvicorn.workers.UvicornWorker"
+# daemon = False
+# max_requests = 3000
