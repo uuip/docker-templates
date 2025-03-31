@@ -8,6 +8,11 @@ max_requests = 3000
 # errorlog = "logs/gun_error.log"
 # capture_output = True # Redirect stdout/stderr to specified file in errorlog.
 
+# workers: -w Default: 1
+# worker_class: -k Default: 'sync'
+# threads: --threads  Default: 1，只影响gthread
+# Default: 'sync', 同时配置threads>1 则使用 gthread
+
 # 使用gevent
 # 1. pip install 'gunicorn[gevent]' # gunicorn帮我们执行了monkey.patch_all
 # 2. 添加配置: worker_class = "gevent", 删除threads
@@ -28,3 +33,4 @@ max_requests = 3000
 # worker_class = "uvicorn.workers.UvicornWorker"
 # daemon = False
 # max_requests = 3000
+
