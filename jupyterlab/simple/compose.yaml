@@ -1,0 +1,12 @@
+name: jupyterlab
+services:
+  jlab:
+    image: jupyterlab
+    pull_policy: never
+    build: .
+    restart: unless-stopped
+    environment:
+      - LOGURU_LEVEL=INFO
+      - PGTZ=UTC
+    ports:
+      - "8888:8888"

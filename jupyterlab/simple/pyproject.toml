@@ -1,0 +1,17 @@
+[project]
+name = "jlab"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "jupyterlab>=4.4.3",
+    "jupyterlab-lsp>=5.1.0",
+    "pandas>=2.2.3",
+    "python-lsp-server>=1.12.2",
+]
+
+[[tool.uv.index]]
+name = "bfsu"
+url = "https://mirrors.bfsu.edu.cn/pypi/web/simple"
+default = true
