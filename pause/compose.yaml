@@ -1,0 +1,10 @@
+name: ocr
+
+services:
+  api:
+    image: ocr_project
+    build: .
+    pull_policy: never
+    restart: unless-stopped
+    network_mode: none
+    command: ["sleep", "infinity"]

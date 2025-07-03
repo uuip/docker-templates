@@ -33,7 +33,7 @@ docker compose pull
 `docker pull`
 
 ## 常用基础镜像
-debian:12-slim, ubuntu:24.04
+debian:13-slim, ubuntu:24.04
 ```dockerfile
 FROM debian:12-slim
 RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
@@ -41,7 +41,7 @@ RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debi
     && apt-get install -y --no-install-recommends libssl3 \
     && rm -rf /var/lib/apt/lists/*
 ```
-debian:11-slim, ubuntu:22.04
+debian:12-slim, ubuntu:22.04
 ```dockerfile
 FROM ubuntu:22.04
 
@@ -52,7 +52,7 @@ RUN sed -i -E "s/\w+.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list \
 ```
 
 ```dockerfile
-FROM python:3.13-slim
+FROM python:3.14-slim
 ENV PROJECT_DIR=/app
 
 RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debian.sources \

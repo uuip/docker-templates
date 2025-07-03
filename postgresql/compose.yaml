@@ -4,7 +4,7 @@ volumes:
 services:
   postgres:
     image: postgres:17
-    restart: always
+    restart: unless-stopped
     shm_size: 2g
     environment:
       POSTGRES_USER: postgres
