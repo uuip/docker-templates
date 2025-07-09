@@ -5,9 +5,13 @@ workers = 4  # -w Default: 1
 threads = 200  # --threads  Default: 1，只影响gthread
 reload = False
 daemon = False
-max_requests = 3000  # The maximum number of requests a worker will process before restarting.
-# errorlog = "logs/gun_error.log"
+max_requests = 3000  # maximum number of requests before restarting a worker
+accesslog = "-"  # --access-logfile
+errorlog = "-"  # --error-logfile
+timeout = 300
+# pidfile = "app.pid"
 # capture_output = True # Redirect stdout/stderr to specified file in errorlog.
+
 # ======================================================= #
 # 使用gevent
 # 1. pip install 'gunicorn[gevent]' # gunicorn 帮我们执行了monkey.patch_all
@@ -19,6 +23,7 @@ max_requests = 3000  # The maximum number of requests a worker will process befo
 
 # def post_fork(server, worker):
 #     patch_psycopg()
+
 # ======================================================= #
 # fastapi and uvicorn
 # 1. 多数情况直接使用 uvicorn 即可
