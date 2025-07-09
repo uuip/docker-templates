@@ -3,7 +3,7 @@ services:
   consumer:
     image: rust_project
     pull_policy: never
-    restart: always
+    restart: unless-stopped
     build: .
     environment: &env
       DB_URL: postgres://postgres:postgres@postgres/postgres

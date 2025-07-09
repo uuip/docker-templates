@@ -5,7 +5,7 @@ volumes:
 services:
   postgres:
     image: postgres:17
-    restart: always
+    restart: unless-stopped
     shm_size: 2g
     environment:
       POSTGRES_USER: postgres
@@ -29,7 +29,7 @@ services:
     image: demo_project
     build: .
     pull_policy: never
-    restart: always
+    restart: unless-stopped
     environment: &env
       DEBUG: "true"
       DB_URL: postgres://postgres:postgres@postgres/postgres
@@ -38,6 +38,7 @@ services:
       - ./logs:/app/logs
     ports:
       - "8000:8000"
+#    command: [ "gunicorn","--bind","0.0.0.0:8001","--workers","4","--worker-class","gevent","app:app" ]
     command: gunicorn
     depends_on: # condition组织启动顺序
       postgres:

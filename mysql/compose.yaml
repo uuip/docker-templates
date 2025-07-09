@@ -4,9 +4,8 @@ volumes:
 services:
   mysql:
     image: mysql:8
-    restart: always
+    restart: unless-stopped
     shm_size: 2g
-    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_DATABASE: main
       MYSQL_ROOT_PASSWORD: changepassword
