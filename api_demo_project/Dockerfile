@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl libmagic1 
     && rm -rf /var/lib/apt/lists/*
 ENV PYTHONPATH=/app
 ENV UV_PROJECT_ENVIRONMENT=/usr/local/
-ENV UV_LINK_MODE=copy
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 COPY uv.lock pyproject.toml ./
 RUN --mount=type=cache,target=/root/.cache/uv uv sync --frozen --no-install-project
