@@ -32,11 +32,27 @@ docker compose pull
 
 `docker pull`
 
+```yaml
+    command:
+      - /bin/sh
+      - -c
+      - |
+        python scripts/init.py
+        python scripts/create_address.py -n 200
+```
+
+```
+host.docker.internal
+```
+
+
+
 ## 常用基础镜像
+
 debian:13-slim, ubuntu:24.04
 ```dockerfile
 FROM debian:12-slim
-RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
+RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
     && apt-get update \
     && apt-get install -y --no-install-recommends libssl3 \
     && rm -rf /var/lib/apt/lists/*
@@ -45,7 +61,7 @@ debian:12-slim, ubuntu:22.04
 ```dockerfile
 FROM ubuntu:22.04
 
-RUN sed -i -E "s/\w+.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list \
+RUN sed -i -E "s/\w+.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list \
     && apt-get update \
     && apt-get install -y --no-install-recommends libssl3 \
     && rm -rf /var/lib/apt/lists/*
@@ -55,8 +71,8 @@ RUN sed -i -E "s/\w+.ubuntu.com/mirrors.bfsu.edu.cn/g" /etc/apt/sources.list \
 FROM python:3.14-slim
 ENV PROJECT_DIR=/app
 
-RUN sed -i 's|deb.debian.org|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
-    && pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple \
+RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
+    && pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple \
     && pip install --no-cache-dir -U pip setuptools \
     && mkdir $PROJECT_DIR
 

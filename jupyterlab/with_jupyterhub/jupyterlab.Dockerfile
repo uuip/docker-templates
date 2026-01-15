@@ -2,8 +2,8 @@ FROM jupyter/minimal-notebook
 
 USER root
 ENV PROJECT_DIR=/app HOME=/root
-RUN sed -i -E 's|\w+.ubuntu.com|mirrors.bfsu.edu.cn|g' /etc/apt/sources.list \
-    && pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple \
+RUN sed -i -E 's|\w+.ubuntu.com|mirrors.ustc.edu.cn|g' /etc/apt/sources.list \
+    && pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple \
     && pip install --no-cache-dir -U pip setuptools  \
     && useradd -m -s /bin/bash ubuntu  \
     && echo 'root:changepassword' | chpasswd \

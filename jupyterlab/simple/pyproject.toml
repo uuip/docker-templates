@@ -12,6 +12,6 @@ dependencies = [
 ]
 
 [[tool.uv.index]]
-name = "bfsu"
-url = "https://mirrors.bfsu.edu.cn/pypi/web/simple"
+name = "ustc"
+url = "https://mirrors.ustc.edu.cn/pypi/simple"
 default = true

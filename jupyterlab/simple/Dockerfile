@@ -9,7 +9,7 @@ ENV PROMPT_DIRTRIM=2
 WORKDIR $WORKDIR
 
 COPY pyproject.toml .
-RUN pip3 config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple \
+RUN pip3 config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple \
     && uv sync -U
 
 COPY .jupyter /root/.jupyter

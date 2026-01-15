@@ -22,15 +22,16 @@ pidfile = "app.pid"  # -p --pid Default: None
 # 3. worker_class = "uvicorn.workers.UvicornWorker"
 
 # ================gevent======================================= #
+import psycogreen.gevent as pscycogreen_gevent  # type: ignore
+from gevent import events as gevent_events
+from grpc.experimental import gevent as grpc_gevent  # type: ignore
 from gunicorn.arbiter import Arbiter
 from gunicorn.workers.ggevent import GeventWorker
-from gevent import events as gevent_events
 
 
-def post_fork(server: Arbiter, worker: GeventWorker):
-    # print(isinstance(worker, GeventWorker))
-    # print(gevent.monkey.is_anything_patched())
-    pass
+# def post_fork(server: Arbiter, worker: GeventWorker):
+#     print(isinstance(worker, GeventWorker))
+#     print(gevent.monkey.is_anything_patched()) # False
 
 
 def post_patch(event):
@@ -39,10 +40,10 @@ def post_patch(event):
     # 2. 添加配置: worker_class = "gevent", 删除threads
     # 3. psycopg3: pip install 'psycopg[binary]'；不需要post_fork函数
     # 4. psycopg2，需要安装psycogreen并post_fork
+    # print(gevent.monkey.is_anything_patched()) # True
     if not isinstance(event, gevent_events.GeventDidPatchBuiltinModulesEvent):
         return
-    import psycogreen.gevent as pscycogreen_gevent  # type: ignore
-
+    grpc_gevent.init_gevent()
     pscycogreen_gevent.patch_psycopg()
 
 
