@@ -33,16 +33,18 @@ docker compose pull
 `docker pull`
 
 ```yaml
-    command:
-      - /bin/sh
-      - -c
-      - |
-        python scripts/init.py
-        python scripts/create_address.py -n 200
+command:
+  - /bin/sh
+  - -c
+  - |
+    python scripts/init.py
+    python scripts/create_address.py -n 200
+CMD ["sh", "-c", "alembic upgrade head && exec uvicorn app.main:app --host 0.0.0.0 --port ${APP_PORT:-8000} --workers 2"]
 ```
 
-```
-host.docker.internal
+```yaml
+extra_hosts:
+  - "host.docker.internal=host-gateway"
 ```
 
 

@@ -3,7 +3,7 @@ volumes:
 
 services:
   minio:
-    image: quay.io/minio/minio
+    image: pgsty/minio
     restart: unless-stopped
     ports:
       - "9000:9000"

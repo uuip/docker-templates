@@ -3,7 +3,7 @@ services:
     image: redis
     restart: unless-stopped
     # ports:
-    #  - "6379:6379"
+    #  - "6379:6379"  
     # command: [ "--requirepass","changepassword" ]
     # command: [ "/etc/redis/redis.conf" ]
     # volumes:
