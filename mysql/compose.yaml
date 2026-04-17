@@ -8,11 +8,11 @@ services:
     shm_size: 2g
     environment:
       MYSQL_DATABASE: main
-      MYSQL_ROOT_PASSWORD: changepassword
+      MYSQL_ROOT_PASSWORD: root123
       LANG: C.utf8
       TZ: Asia/Shanghai
-#    ports:
-#      - "3306:3306"
+    ports:
+      - "3306:3306"
     volumes:
       - mysqldata:/var/lib/mysql
     healthcheck:

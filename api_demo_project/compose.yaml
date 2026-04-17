@@ -1,6 +1,8 @@
 name: demo_project
 volumes:
   pgdata:
+x-common-env: &common-env
+  DB_URL: "kingbase://system:12345678ab@host.docker.internal:54321/kingbase?options=-c search_path=ailink"
 
 services:
   postgres:
@@ -28,11 +30,10 @@ services:
     # image, pull_policy联合使用，复用image而 migrate 不重新编译
     image: demo_project
     build: .
-    pull_policy: never
     restart: unless-stopped
     environment: &env
+      <<: *common-env
       DEBUG: "true"
-      DB_URL: postgres://postgres:postgres@postgres/postgres
       REDIS_URL: redis://redis
     volumes:
       - ./logs:/app/logs
@@ -59,32 +60,9 @@ services:
 
   migrate:
     image: demo_project
-    pull_policy: never
     restart: on-failure
     environment: *env
     command: python manage.py migrate
     depends_on:
       postgres:
         condition: service_healthy
-
-  api2:
-    image: demo_project
-    pull_policy: never
-    environment: *env
-    command: [ "python","something.py" ]
-    depends_on:
-      - api # 等价于 condition: service_started
-      - redis
-
-  api3:
-    image: demo_project
-    pull_policy: never
-    environment: # yaml只能merge字典, 若是列表方式，可通过锚点引用，不能merge
-      <<: *env
-      YET_ANOTHER: VARIABLE
-      DB_URL: OVERRIDE
-    ports:
-      - "8002:8002"
-    command: python manage.py runserver --noreload 0.0.0.0:8002
-    depends_on:
-      - api
