@@ -14,10 +14,10 @@ services:
       TZ: Asia/Shanghai
     ports:
       - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/
-    #      - ./postgresql.conf:/etc/postgresql/postgresql.conf
-    #    command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
+    # volumes:
+    #   - pgdata:/var/lib/postgresql/
+    #   - ./postgresql.conf:/etc/postgresql/postgresql.conf
+    # command: [ "-c", "config_file=/etc/postgresql/postgresql.conf" ]
     healthcheck:
       test: pg_isready -U $$POSTGRES_USER
       interval: 10s

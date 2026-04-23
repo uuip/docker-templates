@@ -20,10 +20,3 @@ mv debot-console/debot-console-bootstrap/target/aiLink-debot-console.tar.gz targ
 cd target
 tar xf aiLink-debot-console.tar.gz
 rm -rf aiLink-debot-console.tar.gz
-
-# 可以把start和build分开，仅在需要时build
-cd aiLink-debot-console
-cp $PROJECT_DIR/application-prod.yml conf/
-./bin/startup.sh
-
-cd "$ORIG_DIR"
