@@ -1,4 +1,4 @@
 FROM python:3.11-slim
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/project
 WORKDIR $PYTHONPATH

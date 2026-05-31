@@ -35,12 +35,9 @@ services:
       <<: *common-env
       DEBUG: "true"
       REDIS_URL: redis://redis
-    volumes:
-      - ./logs:/app/logs
     ports:
       - "8000:8000"
-#    command: [ "gunicorn","--bind","0.0.0.0:8001","--workers","4","--worker-class","gevent","app:app" ]
-    command: gunicorn
+    command: [ "gunicorn","--bind","0.0.0.0:8001","--workers","4","--worker-class","gevent","app:app" ]
     depends_on: # condition组织启动顺序
       postgres:
         condition: service_healthy

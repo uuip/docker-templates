@@ -11,7 +11,7 @@ COPY uv.lock pyproject.toml ./
 RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv uv sync --no-install-project
 
 FROM builder
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/project
 WORKDIR $PYTHONPATH
 COPY . .
 ENTRYPOINT ["gunicorn"]

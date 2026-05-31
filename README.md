@@ -77,12 +77,8 @@ RUN sed -i -E "s/\w+.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list \
 
 ```dockerfile
 FROM python:3.14-slim
-ENV PROJECT_DIR=/app
 
-RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources \
-    && mkdir $PROJECT_DIR
-
-WORKDIR $PROJECT_DIR
+RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources
 ```
 
 ## 坑

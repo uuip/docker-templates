@@ -4,23 +4,28 @@ server {
     server_name localhost;
 
     gzip on;
+    gzip_min_length 1k;
+    gzip_types text/plain text/css text/javascript application/javascript application/json application/xml;
     gzip_vary on;
 
     charset UTF-8;
     client_max_body_size 0;
 
     location / {
-        root /usr/share/nginx/html;
-        try_files $uri $uri/ /index.html;
+      root /usr/share/nginx/html;
+      try_files $uri $uri/ /index.html;
     }
 
     location /dt/api/ {
-        if ($request_method = 'OPTIONS') {
-                add_header Access-Control-Allow-Origin *;
-                add_header Access-Control-Allow-Headers 'X-Requested-With,Content-Type,Authorization';
-                add_header Access-Control-Request-Method *;
-                return 204;
-        }
-        proxy_pass ${API}/;
+      if ($request_method = 'OPTIONS') {
+        add_header Access-Control-Allow-Origin *;
+        add_header Access-Control-Allow-Methods 'GET,POST,PUT,PATCH,DELETE,OPTIONS';
+        add_header Access-Control-Allow-Headers 'X-Requested-With,Content-Type,Authorization';
+        return 204;
+      }
+      
+      proxy_pass ${API}/;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $host;
     }
 }

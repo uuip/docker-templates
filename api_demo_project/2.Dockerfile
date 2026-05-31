@@ -8,12 +8,12 @@ RUN uv python install 3.11
 
 FROM base AS builder
 COPY uv.lock pyproject.toml ./
-RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv uv sync --no-install-project -p 3.11 && mkdir -p log
+RUN --mount=type=cache,id=uv-cache,target=/root/.cache/uv uv sync --no-install-project -p 3.11
 
 FROM builder
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/project
 WORKDIR $PYTHONPATH
-ENV PATH=/app/.venv/bin:$PATH
+ENV PATH=$PYTHONPATH/.venv/bin:$PATH
 COPY . .
 ENTRYPOINT ["gunicorn"]
 CMD [ "--bind","0.0.0.0:9999", "-c","configs/gunicorn.conf.py" ]
