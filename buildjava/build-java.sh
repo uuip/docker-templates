@@ -1,18 +1,17 @@
-#!/bin/bash
+#!/bin/zsh
 
-export JAVA_HOME=~/Desktop/Applications/jdk-17.0.15
-export MAVEN_HOME=~/Desktop/Applications/maven
-export PATH=$MAVEN_HOME/bin:$JAVA_HOME/bin:$PATH
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export PATH=$JAVA_HOME/bin:$PATH
 
 export APP_DAEMON=false
 export TZ=Asia/Shanghai
 
-ORIG_DIR="$(pwd)"
-PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+# PROJECT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_DIR="/Users/sharp/Desktop/project/debot/debot"
 
 cd "$PROJECT_DIR"
-sed -i '/<module>debot-ui<\/module>/d' pom.xml
-mvn -B clean -DskipTests package
+gsed -i '/<module>debot-ui<\/module>/d' pom.xml
+mvn -B -o clean -DskipTests package
 
 mkdir -p target
 mv debot-console/debot-console-bootstrap/target/aiLink-debot-console.tar.gz target/

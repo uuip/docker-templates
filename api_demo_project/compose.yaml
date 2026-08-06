@@ -27,7 +27,6 @@ services:
     image: redis
 
   api:
-    # image, pull_policy联合使用，复用image而 migrate 不重新编译
     image: demo_project
     build: .
     restart: unless-stopped
@@ -37,7 +36,7 @@ services:
       REDIS_URL: redis://redis
     ports:
       - "8000:8000"
-    command: [ "gunicorn","--bind","0.0.0.0:8001","--workers","4","--worker-class","gevent","app:app" ]
+    command: [ "gunicorn","--bind","0.0.0.0:8001","--workers","2","--worker-class","gevent","app:app" ]
     depends_on: # condition组织启动顺序
       postgres:
         condition: service_healthy

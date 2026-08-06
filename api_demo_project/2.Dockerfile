@@ -16,4 +16,4 @@ WORKDIR $PYTHONPATH
 ENV PATH=$PYTHONPATH/.venv/bin:$PATH
 COPY . .
 ENTRYPOINT ["gunicorn"]
-CMD [ "--bind","0.0.0.0:9999", "-c","configs/gunicorn.conf.py" ]
+CMD [ "--bind","0.0.0.0:9999"]

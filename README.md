@@ -25,19 +25,24 @@ FROM docker.m.daocloud.io/python:3.14
 
 COPY --from=ghcr.nju.edu.cn/astral-sh/uv:latest /uv /uvx /bin/
 
-ENV UV_DEFAULT_INDEX=http://mirrors.cloud.aliyuncs.com/pypi/simple
+RUN npm config set registry https://registry.npmmirror.com
+ENV COREPACK_NPM_REGISTRY=https://registry.npmmirror.com
+
 ENV UV_DEFAULT_INDEX=https://mirrors.ustc.edu.cn/pypi/simple
+ENV PIP_INDEX_URL=https://mirrors.ustc.edu.cn/pypi/simple
+# RUN pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
 
 ENV UV_PYTHON_INSTALL_MIRROR=https://registry.npmmirror.com/-/binary/python-build-standalone/
 ENV UV_PYTHON_INSTALL_MIRROR=https://mirror.nju.edu.cn/github-release/astral-sh/python-build-standalone/
+ENV  UV_PYTHON_INSTALL_MIRROR=https://mirrors.ustc.edu.cn/github-release/astral-sh/python-build-standalone/
 ENV UV_PYTHON_INSTALL_MIRROR=https://ghfast.top/https://github.com/astral-sh/python-build-standalone/releases/download
 
-RUN pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/simple
 
 RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources
 
-RUN sed -i -E 's#https?://(repo|mirrors)\.openeuler\.org/#https://mirrors.ustc.edu.cn/openeuler/#g' /etc/yum.repos.d/openEuler.repo
-RUN sed -i -E 's#https?://(repo|mirrors)\.openeuler\.org/#https://mirrors.aliyun.com/openeuler/#g' /etc/yum.repos.d/openEuler.repo
+RUN sed -i -E 's#https?://(repo|mirrors)\.openeuler\.org#https://mirrors.ustc.edu.cn/openeuler#g' /etc/yum.repos.d/openEuler.repo
+
+# https://mirrors.aliyun.com/openeuler
 
 ```
 
@@ -62,23 +67,6 @@ RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debi
     && apt-get update \
     && apt-get install -y --no-install-recommends libssl3 \
     && rm -rf /var/lib/apt/lists/*
-```
-
-debian:12-slim, ubuntu:22.04
-
-```dockerfile
-FROM ubuntu:22.04
-
-RUN sed -i -E "s/\w+.ubuntu.com/mirrors.ustc.edu.cn/g" /etc/apt/sources.list \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends libssl3 \
-    && rm -rf /var/lib/apt/lists/*
-```
-
-```dockerfile
-FROM python:3.14-slim
-
-RUN sed -i 's|deb.debian.org|mirrors.ustc.edu.cn|g' /etc/apt/sources.list.d/debian.sources
 ```
 
 ## 坑

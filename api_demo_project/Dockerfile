@@ -14,5 +14,16 @@ FROM builder
 ENV PYTHONPATH=/project
 WORKDIR $PYTHONPATH
 COPY . .
-ENTRYPOINT ["gunicorn"]
-CMD [ "--bind","0.0.0.0:8000", "-c","configs/gunicorn.conf.py" ]
+ENTRYPOINT ["gunicorn","app.main:app","--pid","app.pid", "--accesslog","-"]
+CMD [ "--bind","0.0.0.0:8000", "--worker-class","uvicorn.workers.UvicornWorker","--workers","2", "--timeout","1800"]
+
+# ENTRYPOINT ["uvicorn", "app.main:app"]
+# CMD ["--host", "0.0.0.0", "--port", "8000"]
+
+# compose
+# entrypoint
+# command
+
+# k8s
+# command
+# args
