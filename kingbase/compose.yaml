@@ -1,0 +1,24 @@
+services:
+  kingbase:
+    image: kseleven/kingbase:v1.0.3
+    shm_size: 1g
+    entrypoint: /entrypoint.sh
+    privileged: true
+    volumes:
+      - kbdata:/opt/Kingbase/ES/V8/data/
+      - ./license_29402/license_29402_0.dat:/license.dat
+      - ./entrypoint.sh:/entrypoint.sh:ro
+    environment:
+      DB_USER: system
+      PASSWORD: 12345678ab
+      DB_MODE: pg
+      ENABLE_CI: no
+      # TZ: Asia/Shanghai
+      LC_COLLATE: C
+      LC_CTYPE: C.utf8
+    ports:
+      - "54321:54321"
+    restart: unless-stopped
+
+volumes:
+  kbdata:
