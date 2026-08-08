@@ -3,7 +3,7 @@ volumes:
 
 services:
   minio:
-    image: pgsty/minio
+    image: pgsty/silo
     restart: unless-stopped
     ports:
       - "9000:9000"
